@@ -1,10 +1,13 @@
-import React from "react";
 import location from "../../api/episode.json";
 import { useParams } from "react-router-dom";
 import Card from "../common/card";
+import { EpisodeData } from "../types/data";
 const Episode = () => {
-  const { id } = useParams();
-  const currentEpisode = location.filter((h) => h.id === +id)[0];
+  const { id } = useParams<{ id?: string }>();
+  if (!id) return "Эпизод не найден";
+  const currentEpisode: EpisodeData | undefined = location.filter(
+    (h) => h.id === +id
+  )[0];
   return (
     <Card
       episode={currentEpisode.episode}

@@ -1,16 +1,17 @@
 import React from "react";
-import characters from "../../api/characters.json";
+import episode from "../../api/episode.json";
 import { NavLink } from "react-router-dom";
 import { useSorted } from "../../hooks/useSorted";
 import SortedButtons from "../ui/sorted-buttons";
-const Heroes = () => {
-  const [sortedData, val, setSearchParams] = useSorted(characters);
+import { EpisodeData } from "../types/data";
+const Episodes: React.FC = () => {
+  const [sortedData, val, setSearchParams] = useSorted<EpisodeData>(episode);
   return (
     <section className="list _container">
-      <h1>Герои</h1>
+      <h1>Эпизоды</h1>
       <SortedButtons val={val} setSearchParams={setSearchParams} />
       <ul>
-        {sortedData.map((e) => (
+        {sortedData.map((e: EpisodeData) => (
           <li key={e.id}>
             <NavLink to={`${e.id}`}>{e.name}</NavLink>
           </li>
@@ -19,4 +20,4 @@ const Heroes = () => {
     </section>
   );
 };
-export default Heroes;
+export default Episodes;

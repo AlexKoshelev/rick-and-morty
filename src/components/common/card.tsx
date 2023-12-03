@@ -1,5 +1,16 @@
 import React from "react";
-const Card = ({
+interface CardContent {
+  image?: string;
+  gender?: string;
+  name: string;
+  species?: string;
+  status?: string;
+  type?: string;
+  dimension?: string;
+  air_date?: string;
+  episode?: string;
+}
+const Card: React.FC<CardContent> = ({
   image,
   gender,
   name,
