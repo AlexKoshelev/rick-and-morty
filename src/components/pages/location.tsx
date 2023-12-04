@@ -1,4 +1,3 @@
-import React from "react";
 import location from "../../api/location.json";
 import { useParams } from "react-router-dom";
 import Card from "../common/card";

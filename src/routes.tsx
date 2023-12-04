@@ -6,10 +6,13 @@ import Heroes from "./components/pages/heroes";
 import Home from "./components/pages/home";
 import Location from "./components/pages/location";
 import Locations from "./components/pages/locations";
+import Login from "./components/pages/login";
 import NotFound from "./components/pages/not-found";
 
 const routes = () => [
   { path: "", element: <Home /> },
+  { path: "login", element: <Login /> },
+
   { path: "locations", element: <Locations /> },
   { path: "locations/:id", element: <Location /> },
   {

@@ -1,4 +1,3 @@
-import React from "react";
 import location from "../../api/location.json";
 import { NavLink } from "react-router-dom";
 import { useSorted } from "../../hooks/useSorted";

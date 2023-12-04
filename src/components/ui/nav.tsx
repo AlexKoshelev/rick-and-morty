@@ -17,6 +17,12 @@ const Nav: React.FC = () => {
           <NavLink to={"episodes"}>Эпизоды</NavLink>
         </li>
       </ul>
+      <ul>
+        {" "}
+        <li>
+          <NavLink to={"login"}>Войти</NavLink>
+        </li>
+      </ul>
     </nav>
   );
 };
