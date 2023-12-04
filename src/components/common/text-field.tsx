@@ -1,5 +1,4 @@
-import React, { ReactNode } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 interface TextFieldProps {
   type: string | "text";
   value?: string;
@@ -7,12 +6,10 @@ interface TextFieldProps {
   label?: string;
   id?: string;
   description?: string;
-  borderRadius?: string;
   isRequired?: boolean;
   error?: string;
   componentStyle?: boolean;
   name?: string;
-  icon?: ReactNode;
   autocomplete?: string;
   inputRef?: React.RefObject<HTMLInputElement>;
   disabled?: boolean;
@@ -26,35 +23,16 @@ const TextField = (props: TextFieldProps) => {
     label,
     id,
     description,
-    borderRadius,
     isRequired,
     error,
     componentStyle,
     name,
-    icon,
     autocomplete,
     inputRef,
     disabled,
     size,
   } = props;
   const className = componentStyle ? "gray" : null;
-  function getRadius(isIcon: boolean) {
-    if (isIcon) {
-      return {
-        borderTopLeftRadius: borderRadius,
-        borderBottomLeftRadius: borderRadius,
-      };
-    } else {
-      if (!icon && borderRadius) {
-        return { borderRadius: borderRadius };
-      } else if (icon && borderRadius) {
-        return {
-          borderTopRightRadius: borderRadius,
-          borderBottomRightRadius: borderRadius,
-        };
-      }
-    }
-  }
 
   return (
     <>
@@ -64,12 +42,10 @@ const TextField = (props: TextFieldProps) => {
       >
         {label} {isRequired ? <span>*</span> : null}
         {description ? <p>{description}</p> : null}
-        <div className={icon ? "icon" : ""}>
-          {icon ? <div style={getRadius(true)}>{icon}</div> : null}
+        <div>
           <input
             ref={inputRef}
             name={name}
-            style={getRadius(false)}
             id={id}
             type={type}
             value={value}
@@ -83,22 +59,5 @@ const TextField = (props: TextFieldProps) => {
     </>
   );
 };
-TextField.propTypes = {
-  type: PropTypes.string,
-  value: PropTypes.string,
-  placeholder: PropTypes.string,
-  label: PropTypes.string,
-  id: PropTypes.string,
-  description: PropTypes.string,
-  borderRadius: PropTypes.string,
-  isRequired: PropTypes.bool,
-  error: PropTypes.string,
-  componentStyle: PropTypes.bool,
-  disabled: PropTypes.bool,
-  name: PropTypes.string,
-  autoComplete: PropTypes.string,
-  size: PropTypes.string,
-  inputRef: PropTypes.object,
-  icon: PropTypes.any,
-};
+
 export default TextField;

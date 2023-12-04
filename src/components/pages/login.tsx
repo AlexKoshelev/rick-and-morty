@@ -1,9 +1,17 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../common/button";
 import FormWrapper from "../common/form-wrapper";
 import TextField from "../common/text-field";
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../context/auth-provider";
 
 const Login: React.FC = () => {
+  const auth = useAuth();
+  console.log(auth);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
   const refSignin = useRef<HTMLFormElement>(null);
   const refInputEmail = useRef<HTMLInputElement>(null);
   const [data, setData] = useState({ email: "", password: "" });
@@ -18,52 +26,57 @@ const Login: React.FC = () => {
   const handleReset = () => {
     setData({ email: "", password: "" });
   };
-  const handleSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-    data: { email: string; password: string },
-    ref: React.RefObject<HTMLFormElement>
-  ) => {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(data);
-    if (ref.current) {
-      ref.current.reset();
+    if (auth) {
+      console.log(data);
+      auth.signin(data, () => {
+        navigate(from, { replace: true });
+      });
     }
-  };
+  }
 
   return (
     <>
       {" "}
       <FormWrapper title={"Форма авторизации"}>
-        <form
-          ref={refSignin}
-          onSubmit={(e) => handleSubmit(e, data, refSignin)}
-          onChange={handleChange}
-          onReset={handleReset}
-        >
-          <TextField
-            inputRef={refInputEmail}
-            type="email"
-            name="email"
-            placeholder={"Введите почту"}
-            autoComplete={"email"}
-            label={"Укажите почту"}
-            borderRadius={"2px"}
-            isRequired={true}
-            componentStyle={true}
-          />
-          <TextField
-            type="password"
-            name="password"
-            autocomplete="current-password"
-            placeholder={"Введите пароль"}
-            label={"Введите пароль"}
-            borderRadius={"2px"}
-            isRequired={true}
-            componentStyle={true}
-          />
+        {!auth.user.email ? (
+          <form
+            ref={refSignin}
+            onSubmit={(e) => handleSubmit(e)}
+            onChange={handleChange}
+            onReset={handleReset}
+          >
+            <TextField
+              inputRef={refInputEmail}
+              type="email"
+              name="email"
+              placeholder={"Введите почту"}
+              autocomplete={"email"}
+              label={"Укажите почту"}
+              isRequired={true}
+              componentStyle={true}
+            />
+            <TextField
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              placeholder={"Введите пароль"}
+              label={"Введите пароль"}
+              isRequired={true}
+              componentStyle={true}
+            />
 
-          <Button type={"submit"}>Войти</Button>
-        </form>
+            <Button type={"submit"}>Войти</Button>
+          </form>
+        ) : (
+          <>
+            <h1>Добро пожаловать {auth.user.email}</h1>
+            <button onClick={() => auth.signout(() => navigate(""))}>
+              Выйти
+            </button>
+          </>
+        )}
       </FormWrapper>
     </>
   );

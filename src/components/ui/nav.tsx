@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/auth-provider";
 const Nav: React.FC = () => {
+  const auth = useAuth();
   return (
     <nav>
       <ul>
@@ -20,7 +22,9 @@ const Nav: React.FC = () => {
       <ul>
         {" "}
         <li>
-          <NavLink to={"login"}>Войти</NavLink>
+          <NavLink to={"login"}>
+            {auth.user.email ? auth.user.email : "Войти"}
+          </NavLink>
         </li>
       </ul>
     </nav>
