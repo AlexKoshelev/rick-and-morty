@@ -1,22 +1,25 @@
 import React from "react";
-import characters from "../../api/characters.json";
 import { useParams } from "react-router-dom";
 import Card from "../common/card";
 import { HeroData } from "../types/data";
+import { useGetCurrentItem } from "../../hooks/useGetCurrentItem";
 const Hero: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
+  const { currentItem, loading, error } = useGetCurrentItem<HeroData>(
+    "https://rickandmortyapi.com/api/character",
+    id
+  );
   if (!id) return "Персонаж не найден";
-  const currentHero: HeroData | undefined = characters.filter(
-    (h) => h.id === +id
-  )[0];
+  if (loading || !currentItem) return "Loading";
+  if (error) return "Что-то пошло не так:(";
   return (
     <Card
-      image={currentHero.image}
-      gender={currentHero.gender}
-      name={currentHero.name}
-      species={currentHero.species}
-      status={currentHero.status}
-      type={currentHero.type}
+      image={currentItem.image}
+      gender={currentItem.gender}
+      name={currentItem.name}
+      species={currentItem.species}
+      status={currentItem.status}
+      type={currentItem.type}
     />
   );
 };

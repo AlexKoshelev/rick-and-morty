@@ -7,6 +7,10 @@ export interface HeroData {
   species: string;
   status: string;
   type: string;
+  episode: string[];
+  location: { name: string; url: string };
+  origin: { name: string; url: string };
+  url: string;
 }
 export interface LocationData {
   id: number;

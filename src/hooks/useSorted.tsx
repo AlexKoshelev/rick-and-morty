@@ -11,7 +11,7 @@ type ReturnType<T> = [
 ];
 export function useSorted<T extends RequiredType>(data: T[]): ReturnType<T> {
   const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams("s=ASC")
+    new URLSearchParams("s=null")
   );
   const val: SortType | null = searchParams.get("s") as SortType;
   function compare(a: T, b: T): number {

@@ -81,11 +81,12 @@ h6 {
 main {
   padding: 20px;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
   background-image: url("./assets/wallpaperbetter.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 nav {
   font-size: 30px;

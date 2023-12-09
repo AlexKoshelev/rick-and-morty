@@ -7,7 +7,6 @@ import { useAuth } from "../../context/auth-provider";
 
 const Login: React.FC = () => {
   const auth = useAuth();
-  console.log(auth);
 
   const navigate = useNavigate();
   const location = useLocation();

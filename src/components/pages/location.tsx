@@ -1,15 +1,21 @@
-import location from "../../api/location.json";
 import { useParams } from "react-router-dom";
 import Card from "../common/card";
+import { useGetCurrentItem } from "../../hooks/useGetCurrentItem";
+import { LocationData } from "../types/data";
 const Location = () => {
   const { id } = useParams<{ id?: string }>();
+  const { currentItem, loading, error } = useGetCurrentItem<LocationData>(
+    "https://rickandmortyapi.com/api/location",
+    id
+  );
   if (!id) return "Локация не найдена";
-  const currentLocation = location.filter((h) => h.id === +id)[0];
+  if (loading || !currentItem) return "Loading";
+  if (error) return "Что-то пошло не так:(";
   return (
     <Card
-      dimension={currentLocation.dimension}
-      name={currentLocation.name}
-      type={currentLocation.type}
+      dimension={currentItem.dimension}
+      name={currentItem.name}
+      type={currentItem.type}
     />
   );
 };

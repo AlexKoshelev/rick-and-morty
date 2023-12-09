@@ -28,8 +28,6 @@ export function AuthProvider({ children }: AuthProps) {
     password: localStorage.getItem("password") || "",
   }));
   function signin(newUser: AuthData, callback: () => void) {
-    console.log(newUser);
-
     setUser(newUser);
     if (newUser.email && newUser.password) {
       localStorage.setItem("email", newUser.email);
